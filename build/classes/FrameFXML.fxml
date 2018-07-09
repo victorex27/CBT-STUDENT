@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrameFXMLController">
+    <stylesheets>
+        <URL value="@framefxml.css" />
+    </stylesheets>
+   <children>
+      <Pane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;">
+         <children>
+            <Pane prefHeight="127.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;">
+               <children>
+                  <Button fx:id="closeButton" layoutX="978.0" layoutY="8.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane layoutY="134.0" prefHeight="486.0" prefWidth="1024.0" style="-fx-background-color: #00344D;" styleClass="whiteTopPane" />
+            <Pane layoutY="618.0" prefHeight="150.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
