@@ -67,7 +67,7 @@ public class Person {
 
         String sqlQuery = "SELECT id, first_name, last_name, middle_name, access_level  "
                 + "FROM person "
-                + "WHERE id = ? and password = sha1(?) where access_level = '1' LIMIT 1";
+                + "WHERE id = ? and password = sha1(?) AND access_level = '0' LIMIT 1";
         PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
         pStatement.setString(1, username);
         pStatement.setString(2, password);
@@ -75,6 +75,8 @@ public class Person {
         ResultSet resultSet = pStatement.executeQuery();
 
         if (resultSet.next()) {
+            
+            
 
             setId(resultSet.getString("id"));
             setFirstName(resultSet.getString("first_name"));

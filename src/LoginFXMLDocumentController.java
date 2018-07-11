@@ -61,6 +61,7 @@ public class LoginFXMLDocumentController implements Initializable {
 
         } catch (Exception ex) {
 
+            System.out.println(ex);
             warningText.setText(ex.getMessage());
             warningImage.setVisible(true);
             warningText.setVisible(true);
