@@ -52,7 +52,7 @@ public class LoginFXMLDocumentController implements Initializable {
 
             Student student = new Student();
             /* Remember to change*/
-            if (!student.login("20087746567", "password")) {
+            if (!student.login("2008196767", "password")) {
                 throw new Exception("Incorrect Username and Password Combination");
             }
 

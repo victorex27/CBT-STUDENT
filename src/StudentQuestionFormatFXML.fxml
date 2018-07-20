@@ -93,7 +93,7 @@
       </Pane>
       <Pane layoutX="95.0" layoutY="50.0" prefHeight="58.0" prefWidth="467.0">
          <children>
-            <Label fx:id="questionLabel" text="Label" textFill="WHITE">
+            <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefHeight="21.0" prefWidth="458.0" text="Hellooooooooo" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

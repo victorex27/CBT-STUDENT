@@ -9,10 +9,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ReadingListFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CourseDefaultHomeFXMLController">
     
     <children>
         <fx:include source="FrameFXML.fxml" />
+      <Label layoutX="283.0" layoutY="201.0" text="Result: " textFill="#f8f3f3">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
       <GridPane layoutX="12.0" layoutY="247.0" prefHeight="291.0" prefWidth="219.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="10.0" prefWidth="67.0" />
@@ -34,8 +39,32 @@
       </GridPane>
       <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0">
          <children>
-            <ListView fx:id="listView" layoutX="14.0" layoutY="61.0" prefHeight="291.0" prefWidth="219.0" />
+            <Hyperlink layoutX="86.0" layoutY="62.0" onAction="#onAssessmentClick" text="Assessment">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink layoutX="86.0" layoutY="104.0" onAction="#onLibraryClick" text="Library">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Hyperlink>
+            <Label fx:id="courseCode" layoutX="80.0" layoutY="333.0" text="CSC 301" textFill="#f8f8f8">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseTitle" layoutX="150.0" layoutY="333.0" text="Course Title" textFill="#f8f8f8">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
+      <Label fx:id="result" layoutX="391.0" layoutY="211.0" text="N/A" textFill="#f8f8f8">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
