@@ -13,13 +13,19 @@
 public class Course {
     
     private int id;
+    private int regId;
     private String courseCode;
     private String courseTitle;
 
-    public Course(int id, String courseCode, String courseTitle) {
+    public Course(int regId, int id, String courseCode, String courseTitle) {
+        this.regId = regId;
         this.id = id;
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
+    }
+
+    public int getRegId() {
+        return regId;
     }
 
     public int getId() {

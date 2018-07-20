@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-
-
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,22 +13,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -65,8 +69,12 @@ public class StudentQuestionFormatFXMLController implements Initializable {
     RadioButton radioButtonD;
     @FXML
     RadioButton radioButtonE;
-    @FXML Button nextButton;
-    @FXML Button prevButton;
+    @FXML
+    Button nextButton;
+    @FXML
+    Button prevButton;
+    @FXML
+    Button submitButton;
 
     @FXML
     Label timerHour;
@@ -76,27 +84,32 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
     @FXML
     Label timerSecond;
-    
+
     @FXML
     GridPane gridPane;
-    
+
     @FXML
     private AnchorPane anchorPane;
 
-    
+    @FXML
+    Pane textAreaPane;
+
+    @FXML
+    TextArea textArea;
+
     private String courseCode;
     private Student student;
     private ArrayList<Question> questions;
 
     private String id;
     private int currentSN;
+    private Question currentQuestion;
     private Map<Integer, Boolean> scoreSheet;
     //hold the index of question with their answer;
     private Map<Integer, String> answerQuestions;
     private int totalNumberOfQuestions;
-    private int numberOfCorrectAnswers;
+    private int regId;
 
-    private ArrayList<Integer> answeredQuestionIndex;
     private String selectedAnswer;
     private String correctAnswer;
 
@@ -104,36 +117,34 @@ public class StudentQuestionFormatFXMLController implements Initializable {
     private PreparedStatement pStatement;
 
     private ToggleGroup toggleGroup;
+
+    private Timeline timeline;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 
         questions = new ArrayList<>();
         scoreSheet = new HashMap<>();
-        answerQuestions = new HashMap<>(); 
-        answeredQuestionIndex = new ArrayList<>();
-        
+        answerQuestions = new HashMap<>();
+
         try {
             connection = SimpleConnection.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         currentSN = 0;
-        
-        
+
     }
-    
-    public void play(Student student, String courseCode) throws Exception{
-    
+
+    public void play(Student student, String courseCode) throws Exception {
+
         this.courseCode = courseCode;
         this.student = student;
-        
-        
+
         setQuestions(this.student.getId(), student.getAllQuestions(courseCode));
-        
+
         toggleGroup = new ToggleGroup();
 
         radioButtonA.setToggleGroup(toggleGroup);
@@ -142,28 +153,31 @@ public class StudentQuestionFormatFXMLController implements Initializable {
         radioButtonD.setToggleGroup(toggleGroup);
         radioButtonE.setToggleGroup(toggleGroup);
 
+        String sqlQuery = "UPDATE course_registration SET status = 'close' where id = ? ";
+
+        pStatement = connection.prepareStatement(sqlQuery);
+
+       
+        pStatement.setInt(1, regId);
+
+        pStatement.executeUpdate();
+
         toggleGroup.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle oldToggle, Toggle newToggle) -> {
 
-            if( newToggle != null ){
-            
+            if (newToggle != null) {
+
                 selectedAnswer = (String) newToggle.getUserData();
                 answerQuestions.put(currentSN, selectedAnswer);
             }
-            
 
         });
 
         // this will not work
         showQuestion(currentSN);
 
-       CountDownTimer timer = new CountDownTimer(1, 0, 0);
-    
+        CountDownTimer timer = new CountDownTimer(0, 1, 10);
+
     }
-    
-    
-    
-        
-    
 
     @FXML
     private void showNext() {
@@ -176,76 +190,95 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
     private void updateScore() {
 
-        
         boolean t;
 
-        if (selectedAnswer == null ? correctAnswer == null : selectedAnswer.equals(correctAnswer)) {
-            t = true;
+        if (currentQuestion.isTheory()) {
+            
+            selectedAnswer = textArea.getText();
+            
+            if(answerQuestions.containsKey(currentSN)){
+                try {
 
+                String sqlQuery = " UPDATE answer SET text = ? WHERE course_registration_id = ? and exam_question_id = ?";
+
+                pStatement = connection.prepareStatement(sqlQuery);
+                
+                pStatement.setString(1, selectedAnswer );
+                pStatement.setInt(2, regId);
+                pStatement.setInt(3, currentQuestion.getId());
+                
+
+                pStatement.executeUpdate();
+              
+                //id = PreparedStatement.RETURN_GENERATED_KEYS;
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
+            }else{
+                
+                 try {
+
+                String sqlQuery = " INSERT INTO answer (course_registration_id, exam_question_id, text) VALUES (?,?,?)";
+
+                pStatement = connection.prepareStatement(sqlQuery);
+                
+                pStatement.setInt(1, regId);
+                pStatement.setInt(2, currentQuestion.getId());
+                pStatement.setString(3, selectedAnswer );
+
+                pStatement.executeUpdate();
+              
+                //id = PreparedStatement.RETURN_GENERATED_KEYS;
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
+            
+            }
+            
+            answerQuestions.put(currentSN, selectedAnswer);
+            //t = true;
         } else {
+            t = selectedAnswer == null ? correctAnswer == null : selectedAnswer.equals(correctAnswer);
 
-            t = false;
+            scoreSheet.put(currentSN, t);
+
+            int total = (int) scoreSheet.values().stream().filter(e -> e == true).count();
+
+            try {
+
+                String sqlQuery = "UPDATE course_registration SET result = ? where id = ? ";
+
+                pStatement = connection.prepareStatement(sqlQuery);
+
+                pStatement.setInt(1, total);
+            
+                pStatement.setInt(2, regId );
+
+                pStatement.executeUpdate();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
-        scoreSheet.put(currentSN, t);
-
-        int total = (int) scoreSheet.values().stream().filter(e -> e == true).count();
-
-       
-
-        try {
-
-            String sqlQuery = "UPDATE course_registration SET result = ? where reg_number = ? AND course_code = ?";
-
-            pStatement = connection.prepareStatement(sqlQuery);
-
-            pStatement.setInt(1, total);
-            pStatement.setString(2, id);
-            pStatement.setString(3, courseCode);
-
-            pStatement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-     
-
-        
     }
 
     @FXML
-    private void onSubmit() {
+    private void onSubmit(ActionEvent evt) throws IOException {
 
         updateScore();
-        try {
+        anchorPane.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader( getClass().getResource("EndOfPaperMessageFXML.fxml"));
+        Pane pane = (Pane)loader.load();
+        anchorPane.getChildren().add(pane);
+        //ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
 
-            String sqlQuery = "UPDATE course_registration SET status = 'close' where reg_number = ? and course_code =? ";
-
-            pStatement = connection.prepareStatement(sqlQuery);
-
-           
-            pStatement.setString(1, id);
-            pStatement.setString(2, courseCode);
-
-            pStatement.executeUpdate();
-            anchorPane.getChildren().clear();
-            
-            Label label = new Label("Submitted");        
-            label.setStyle("-fx-color:white;");
-            AnchorPane.setTopAnchor(label, 10.0); 
-            anchorPane.getChildren().add(label);
-            //ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
-        
-        } catch (SQLException ex ) {
-            Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-        
-        
-            
-        
-        
-        
+        timeline.stop();
     }
 
     @FXML
@@ -267,102 +300,157 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
     private void showQuestion(int i) {
 
+        /**
+         * Check the next and previous button
+         */
         
-        if( currentSN == totalNumberOfQuestions -1 ){
         
+        if (currentSN == totalNumberOfQuestions - 1) {
+
             nextButton.setDisable(true);
-        }else{
-        
+        } else {
+
             nextButton.setDisable(false);
         }
-        if(currentSN == 0){
+        if (currentSN == 0) {
             prevButton.setDisable(true);
-        
-        }else{
-        
+
+        } else {
+
             prevButton.setDisable(false);
         }
-        
+
         selectedAnswer = "";
+        
         toggleGroup.selectToggle(null);
-        
-        
-        
+
         Question q = this.questions.get(i);
-       
+
+        // Set Current Question
+        setCurrentQuestion(q);
 
         correctAnswer = q.getA();
 
         serialNumberLabel.setText(String.valueOf(i + 1));
 
-        
-        //You can scramble the options here.
         String qu = q.getQuestion();
-        String a = q.getA();
-        String b = q.getB();
-        String c = q.getC();
-        String d = q.getD();
-        String e = q.getE();
-        
+
         questionLabel.setText(qu);
-        answerALabel.setText(a);
-        answerBLabel.setText(b);
-        answerCLabel.setText(c);
-        answerDLabel.setText(d);
-        answerELabel.setText(e);
+        
+        if (q.isTheory()) {
 
-        radioButtonA.setUserData(a);
-        radioButtonB.setUserData(b);
-        radioButtonC.setUserData(c);
-        radioButtonD.setUserData(d);
-        radioButtonE.setUserData(e);
+            
+            //remove gridPane
+            gridPane.setVisible(false);
 
+            //show textAreaPane
+            //textAreaPane.setLayoutY(112);
+            textArea.setText( answerQuestions.get(currentSN));
+            textAreaPane.setVisible(true);
 
-        if(answerQuestions.containsKey(currentSN)){
+        } else {
+
+            //initialize radio button
+            radioButtonA.setVisible(true);
+            radioButtonB.setVisible(true);
+            radioButtonC.setVisible(true);
+            radioButtonD.setVisible(true);
+            radioButtonE.setVisible(true);
+
+            //remove textAreaPane
+            textAreaPane.setVisible(false);
+
+            //show gridPane
+            gridPane.setVisible(true);
+
+            //You can scramble the options here.
+            String a = q.getA();
+            String b = q.getB();
+            String c = q.getC();
+            String d = q.getD();
+            String e = q.getE();
+
             
-            String savedAnswer =  answerQuestions.get(currentSN);
-            if( radioButtonA.getUserData().equals(savedAnswer)){
-            
-                radioButtonA.setSelected(true);
-            }else if( radioButtonB.getUserData().equals(savedAnswer)){
-            
-                radioButtonB.setSelected(true);
-            }else if( radioButtonC.getUserData().equals(savedAnswer)){
-            
-                radioButtonC.setSelected(true);
-            }else if( radioButtonD.getUserData().equals(savedAnswer)){
-            
-                radioButtonD.setSelected(true);
-            }else if( radioButtonE.getUserData().equals(savedAnswer)){
-            
-                radioButtonE.setSelected(true);
+            answerALabel.setText(a);
+            answerBLabel.setText(b);
+            answerCLabel.setText(c);
+            answerDLabel.setText(d);
+            answerELabel.setText(e);
+
+            radioButtonA.setUserData(a);
+            radioButtonB.setUserData(b);
+            radioButtonC.setUserData(c);
+            radioButtonD.setUserData(d);
+            radioButtonE.setUserData(e);
+
+            if (answerQuestions.containsKey(currentSN)) {
+
+                String savedAnswer = answerQuestions.get(currentSN);
+                if (radioButtonA.getUserData().equals(savedAnswer)) {
+
+                    radioButtonA.setSelected(true);
+                } else if (radioButtonB.getUserData().equals(savedAnswer)) {
+
+                    radioButtonB.setSelected(true);
+                } else if (radioButtonC.getUserData().equals(savedAnswer)) {
+
+                    radioButtonC.setSelected(true);
+                } else if (radioButtonD.getUserData().equals(savedAnswer)) {
+
+                    radioButtonD.setSelected(true);
+                } else if (radioButtonE.getUserData().equals(savedAnswer)) {
+
+                    radioButtonE.setSelected(true);
+                }
+
             }
-            
-            
-        
-        }
-        
-        
-        if( q.getC() == null ){
-        
-            radioButtonC.setVisible(false);
-            
-        }else if( q.getD() == null ){
-        
-            radioButtonD.setVisible(false);
-        }else if( q.getE() == null ){
-        
-            radioButtonE.setVisible(false);
+
+            if (a == null) {
+
+                radioButtonA.setVisible(false);
+
+            }
+
+            if (b == null) {
+
+                radioButtonB.setVisible(false);
+
+            }
+            if (c == null) {
+
+                radioButtonC.setVisible(false);
+
+            }
+            if (d == null) {
+
+                radioButtonD.setVisible(false);
+            }
+            if (e == null) {
+
+                radioButtonE.setVisible(false);
+            }
+
         }
 
     }
 
     public void setQuestions(String id, ArrayList<Question> questions) {
 
-       
         this.questions = questions;
         this.id = id;
         totalNumberOfQuestions = questions.size();
+    }
+
+    public void setCurrentQuestion(Question currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
+
+    public void setExamid(int Examid) {
+        this.regId = Examid;
+    }
+
+    public void setRegId(int regId) {
+        this.regId = regId;
     }
 
     class CountDownTimer {
@@ -384,35 +472,24 @@ public class StudentQuestionFormatFXMLController implements Initializable {
             totalTime = 1000 * (sec + 60 * (min + 60 * hour));
             remainingTime = totalTime;
 
-            Timer timer = new Timer();
+            AtomicInteger i = new AtomicInteger(0);
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+                remainingTime = totalTime - i.getAndIncrement() * rate;
 
-            TimerTask task = new TimerTask() {
-                int i = 0;
+                timerHour.setText(String.valueOf(getHour()));
+                timerMinute.setText(String.format("%02d", getMinute()));
+                timerSecond.setText(String.format("%02d", getSecond()));
 
-                @Override
-                public void run() {
+            }));
 
-                    Platform.runLater(() -> {
-                        timerHour.setText(String.valueOf(getHour()));
-                        timerMinute.setText(String.format("%02d",getMinute()));
-                        timerSecond.setText(String.format("%02d",getSecond()));
-                    });
+            timeline.setCycleCount(totalTime / 1000);
+            timeline.play();
 
-                    remainingTime = totalTime - i * rate;
+            timeline.setOnFinished(e -> {
 
-                    if (remainingTime == 0) {
+                submitButton.fire();
 
-                        this.cancel();
-                        
-                        onSubmit();
-                    }
-
-                    i++;
-
-                }
-            };
-
-            timer.scheduleAtFixedRate(task, 0, rate);
+            });
 
         }
 

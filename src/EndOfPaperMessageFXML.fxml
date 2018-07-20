@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="AnchorPane" prefHeight="263.0" prefWidth="420.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="EndOfPaperMessageFXMLController">
+    <stylesheets>
+        <URL value="@endofpapermessagefxml.css" />
+    </stylesheets>
+   <children>
+      <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="107.0" text="Thank you for taking part in this examination. " textFill="#834343">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

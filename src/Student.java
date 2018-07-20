@@ -43,9 +43,12 @@ public class Student extends Person{
 
         String sqlQuery = "SELECT course_registration.id, "
                 + "course_code, status, result,course_title, course.id as courseid "
-                + "FROM course_registration INNER JOIN course "
-                + "ON course.id = course_registration.course_id "
-                + "WHERE reg_number = ? AND status = 'open'";
+                + "FROM course_registration INNER JOIN teacher "
+                + "ON teacher.id = course_registration.teacher_id "
+                + "INNER JOIN course "
+                + "ON course.id = teacher.course_id "
+                + "WHERE reg_number = ? ";
+             //   + "WHERE reg_number = ? AND status = 'open'";
 
         PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
@@ -64,7 +67,7 @@ public class Student extends Person{
             while (resultSet.next()) {
 
                 //System.out.printf("%s    ",resultSet);
-                listOfCourses.add(new Course(resultSet.getInt("courseid"), resultSet.getString("course_code"), resultSet.getString("course_title")));
+                listOfCourses.add(new Course(resultSet.getInt("id"),resultSet.getInt("courseid"), resultSet.getString("course_code"), resultSet.getString("course_title")));
 
             }
         }
@@ -126,7 +129,7 @@ public class Student extends Person{
         connection = SimpleConnection.getConnection();
 
         // change this
-        String sqlQuery = "SELECT question,a,b,c,d,e FROM exam_question WHERE teacher_id = ( SELECT id FROM Teacher WHERE course_id = (SELECT id FROM  course WHERE course_code = ? ) ) ";
+        String sqlQuery = "SELECT question,a,b,c,d,e,id FROM exam_question WHERE teacher_id = ( SELECT id FROM Teacher WHERE course_id = (SELECT id FROM  course WHERE course_code = ? ) ) ";
 
         PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
@@ -145,6 +148,7 @@ public class Student extends Person{
             while (resultSet.next()) {
 
                 Question q = new Question.Builder(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)).addC(resultSet.getString(4)).addD(resultSet.getString(5)).addE(resultSet.getString(6)).build();
+                q.setId(resultSet.getInt(7));
                 allQuestions.add(q);
                
             }

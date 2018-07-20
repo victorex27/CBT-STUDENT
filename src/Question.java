@@ -18,9 +18,10 @@ public class Question {
     private String c;
     private String d;
     private String e;
+    private boolean theory;
+    private int id;
 
     private Question() {
-
 
     }
 
@@ -46,6 +47,19 @@ public class Question {
 
     public String getE() {
         return e;
+    }
+
+    public boolean isTheory() {
+        
+        return a== null && b== null && c== null && d== null && e== null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public static class Builder {

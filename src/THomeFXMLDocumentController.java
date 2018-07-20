@@ -100,13 +100,17 @@ public class THomeFXMLDocumentController implements Initializable {
                     setCurrentCourse(a);
                     //dragPane.setVisible(false);
                     vBox.setVisible(false);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentQuestionFormatFXML.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ReadingListFXML.fxml"));
                     try {
                         anchor = (AnchorPane) loader.load();
-                        StudentQuestionFormatFXMLController controller = loader.getController();
+                        ReadingListFXMLController con = loader.getController();
+                        
+                        con.setDocumentId(1);
+                        //StudentQuestionFormatFXMLController controller = loader.getController();
                         //controller.setQuestions(student.getId(), student.getAllQuestions(a.getCourseCode()));
                         
-                        controller.play(student, a.getCourseCode());
+                        //controller.setRegId(a.getRegId());
+                        //controller.play(student, a.getCourseCode());
 
                         //rightPane.getChildren().clear();
                         rightPane.getChildren().add(anchor);
@@ -115,8 +119,6 @@ public class THomeFXMLDocumentController implements Initializable {
                         Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
