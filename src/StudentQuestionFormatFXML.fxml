@@ -9,12 +9,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="343.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentQuestionFormatFXMLController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="457.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentQuestionFormatFXMLController">
     <stylesheets>
         <URL value="@studentquestionformatfxml.css" />
     </stylesheets>
    <children>
-      <GridPane fx:id="gridPane" layoutX="69.0" layoutY="112.0" prefHeight="139.0" prefWidth="483.0">
+      <GridPane fx:id="gridPane" layoutX="69.0" layoutY="202.0" prefHeight="139.0" prefWidth="483.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="38.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="445.0" />
@@ -39,7 +39,7 @@
             <RadioButton fx:id="radioButtonE" mnemonicParsing="false" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <Button fx:id="nextButton" layoutX="457.0" layoutY="290.0" mnemonicParsing="false" onAction="#showNext">
+      <Button fx:id="nextButton" layoutX="457.0" layoutY="380.0" mnemonicParsing="false" onAction="#showNext">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -48,7 +48,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="prevButton" layoutX="69.0" layoutY="289.0" mnemonicParsing="false" onAction="#showPrev">
+      <Button fx:id="prevButton" layoutX="69.0" layoutY="379.0" mnemonicParsing="false" onAction="#showPrev">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -57,41 +57,41 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="submitButton" layoutX="272.0" layoutY="297.0" mnemonicParsing="false" onAction="#onSubmit" style="-fx-background-color: #012333; -fx-border-color: white; -fx-border-image-width: 4px;" text="Submit" textFill="#f5f3f3" />
-      <Label fx:id="timerHour" layoutX="413.0" layoutY="14.0" opacity="0.67" textFill="WHITE">
+      <Button fx:id="submitButton" layoutX="272.0" layoutY="387.0" mnemonicParsing="false" onAction="#onSubmit" style="-fx-background-color: #012333; -fx-border-color: white; -fx-border-image-width: 4px;" text="Submit" textFill="#f5f3f3" />
+      <Label fx:id="timerHour" layoutX="413.0" layoutY="104.0" opacity="0.67" textFill="WHITE">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="timerMinute" layoutX="463.0" layoutY="14.0" opacity="0.67" textFill="WHITE">
+      <Label fx:id="timerMinute" layoutX="463.0" layoutY="104.0" opacity="0.67" textFill="WHITE">
          <font>
             <Font size="30.0" />
          </font></Label>
-      <Label fx:id="timerSecond" layoutX="535.0" layoutY="14.0" opacity="0.67" textFill="WHITE">
+      <Label fx:id="timerSecond" layoutX="535.0" layoutY="104.0" opacity="0.67" textFill="WHITE">
          <font>
             <Font size="31.0" />
          </font></Label>
-      <Label layoutX="430.0" layoutY="23.0" opacity="0.67" text="hh :" textFill="#f8f7f7">
+      <Label layoutX="430.0" layoutY="113.0" opacity="0.67" text="hh :" textFill="#f8f7f7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="496.0" layoutY="23.0" opacity="0.67" text="mm:" textFill="WHITE">
+      <Label layoutX="496.0" layoutY="113.0" opacity="0.67" text="mm:" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="569.0" layoutY="23.0" opacity="0.67" text="ss" textFill="WHITE">
+      <Label layoutX="569.0" layoutY="113.0" opacity="0.67" text="ss" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Pane fx:id="textAreaPane" layoutX="70.0" layoutY="116.0" prefHeight="139.0" prefWidth="483.0" visible="false">
+      <Pane fx:id="textAreaPane" layoutX="70.0" layoutY="206.0" prefHeight="139.0" prefWidth="483.0" visible="false">
          <children>
             <TextArea fx:id="textArea" layoutX="1.0" layoutY="-7.0" prefHeight="148.0" prefWidth="483.0" />
          </children>
       </Pane>
-      <Pane layoutX="95.0" layoutY="50.0" prefHeight="58.0" prefWidth="467.0">
+      <Pane layoutX="95.0" layoutY="155.0" prefHeight="43.0" prefWidth="467.0">
          <children>
             <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefHeight="21.0" prefWidth="458.0" text="Hellooooooooo" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                <font>
@@ -100,6 +100,11 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="serialNumberLabel" layoutX="128.0" layoutY="30.0" />
+      <Label fx:id="serialNumberLabel" layoutX="345.0" layoutY="36.0" text="hjhkhkhj" />
+      <Pane layoutX="70.0" layoutY="14.0">
+         <children>
+            <ImageView fx:id="imageViewOfQuestion" fitHeight="139.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

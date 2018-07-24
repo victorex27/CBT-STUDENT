@@ -77,6 +77,24 @@ public class CourseDefaultHomeFXMLController implements Initializable {
         }
     
     }
+    
+    @FXML
+    public void onAssinmentClick(ActionEvent event){
+    
+        try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentUploadFXML.fxml"));
+            AnchorPane anchor = (AnchorPane) loader.load();
+            AssignmentUploadFXMLController con = loader.getController();
+            con.setCourse(course);
+            //con.setCourse(course);
+           
+            
+            ScreenController.changeScreen(anchor);
+        } catch (IOException ex) {
+            Logger.getLogger(CourseDefaultHomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public Course getCourse() {
         return course;

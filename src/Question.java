@@ -1,4 +1,7 @@
 
+import javafx.scene.image.Image;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +23,8 @@ public class Question {
     private String e;
     private boolean theory;
     private int id;
+    
+    private Image image;
 
     private Question() {
 
@@ -60,6 +65,14 @@ public class Question {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public static class Builder {

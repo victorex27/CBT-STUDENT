@@ -52,13 +52,16 @@ public class ReadingListFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
    
-                  try {
-                        if (Desktop.isDesktopSupported()) {
-                            Desktop.getDesktop().open(fileMap.get(newValue));
-                        }
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
+                if (Desktop.isDesktopSupported()) {
+                    File file = fileMap.get(newValue);
+                    //Desktop.getDesktop().open(file);
+                    
+                    
+                    fileMap.get(newValue).renameTo( new File(System.getProperty("user.home")+"//Documents//"+file.getName()));
+                    //System.out.println(new File(System.getProperty("user.home")+"//Documents//"+file.getName()).getAbsolutePath());
+                    
+                    
+                }
                 
             }
         });

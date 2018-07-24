@@ -30,10 +30,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 
 /**
  * FXML Controller class
@@ -46,56 +48,58 @@ public class StudentQuestionFormatFXMLController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    Label serialNumberLabel;
+    private Label serialNumberLabel;
     @FXML
-    Label questionLabel;
+    private Label questionLabel;
     @FXML
-    Label answerALabel;
+    private Label answerALabel;
     @FXML
-    Label answerBLabel;
+    private Label answerBLabel;
     @FXML
-    Label answerCLabel;
+    private Label answerCLabel;
     @FXML
-    Label answerDLabel;
+    private Label answerDLabel;
     @FXML
     Label answerELabel;
     @FXML
-    RadioButton radioButtonA;
+    private RadioButton radioButtonA;
     @FXML
-    RadioButton radioButtonB;
+    private RadioButton radioButtonB;
     @FXML
-    RadioButton radioButtonC;
+    private RadioButton radioButtonC;
     @FXML
     RadioButton radioButtonD;
     @FXML
-    RadioButton radioButtonE;
+    private RadioButton radioButtonE;
     @FXML
-    Button nextButton;
+    private Button nextButton;
     @FXML
-    Button prevButton;
+    private Button prevButton;
     @FXML
-    Button submitButton;
+    private Button submitButton;
 
     @FXML
-    Label timerHour;
+    private Label timerHour;
 
     @FXML
-    Label timerMinute;
+    private Label timerMinute;
 
     @FXML
-    Label timerSecond;
+    private Label timerSecond;
 
     @FXML
-    GridPane gridPane;
+    private GridPane gridPane;
 
     @FXML
     private AnchorPane anchorPane;
 
     @FXML
-    Pane textAreaPane;
+    private Pane textAreaPane;
 
     @FXML
-    TextArea textArea;
+    private TextArea textArea;
+    
+    @FXML private ImageView imageViewOfQuestion;
 
     private String courseCode;
     private Student student;
@@ -328,6 +332,14 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
         // Set Current Question
         setCurrentQuestion(q);
+        
+        if(q.getImage() != null){
+        
+            imageViewOfQuestion.setImage(q.getImage());
+        }else{
+        
+            imageViewOfQuestion.setImage(null);
+        }
 
         correctAnswer = q.getA();
 

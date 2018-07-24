@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AssessmentFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AssignmentUploadFXMLController">
     
     <children>
         <fx:include source="FrameFXML.fxml" />
@@ -32,6 +32,10 @@
             <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="154.0" style="-fx-background-color: #012333; -fx-border-color: #fff;" text="Courses" textFill="#eeecec" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0" />
+      <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0">
+         <children>
+            <ListView fx:id="listView" layoutX="14.0" layoutY="61.0" prefHeight="291.0" prefWidth="732.0" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>
