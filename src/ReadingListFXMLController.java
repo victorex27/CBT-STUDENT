@@ -83,7 +83,7 @@ public class ReadingListFXMLController implements Initializable {
             while (result.next()) {
 
                 String name = result.getString("name");
-                System.out.println(name);
+                
 
                 
                 File file = new File(name);
