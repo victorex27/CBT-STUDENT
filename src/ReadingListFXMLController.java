@@ -46,6 +46,7 @@ public class ReadingListFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackButtonController.setPrevious("CourseDefaultHomeFXML.fxml");
         fileMap = new HashMap<>();
         
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {

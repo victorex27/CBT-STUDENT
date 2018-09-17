@@ -9,10 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="457.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentQuestionFormatFXMLController">
-    <stylesheets>
-        <URL value="@studentquestionformatfxml.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="457.0" prefWidth="600.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentQuestionFormatFXMLController">
    <children>
       <GridPane fx:id="gridPane" layoutX="69.0" layoutY="202.0" prefHeight="139.0" prefWidth="483.0">
         <columnConstraints>
@@ -91,9 +88,9 @@
             <TextArea fx:id="textArea" layoutX="1.0" layoutY="-7.0" prefHeight="148.0" prefWidth="483.0" />
          </children>
       </Pane>
-      <Pane layoutX="95.0" layoutY="155.0" prefHeight="43.0" prefWidth="467.0">
+      <Pane layoutX="95.0" layoutY="155.0" prefWidth="467.0">
          <children>
-            <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefHeight="21.0" prefWidth="458.0" text="Hellooooooooo" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+            <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="458.0" prefWidth="458.0" text="Hellooooooooollllllllllllllllllllllllllllllllllllllllllllllllllhjhkjhkjhkjhkjduidiyhiyiyiudyiuyiuydhjtkhktjhkjhtkjhrkjnmfn m," textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

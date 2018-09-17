@@ -27,18 +27,16 @@ public class Student extends Person {
 
     public Student() throws ClassNotFoundException, Exception {
 
-        //super();
+        
         listOfCourses = new ArrayList<>();
 
     }
 
-    //this is called when the student wants to take an examination
-    private void takeExam(String subject) {
-
-    }
+    
 
     public void retrieveCourses() throws SQLException, ClassNotFoundException, Exception {
 
+        listOfCourses.clear();
         connection = SimpleConnection.getConnection();
 
         String sqlQuery = "SELECT course_registration.id, "
@@ -197,7 +195,7 @@ public class Student extends Person {
         if (!resultSet.next()) {
 
             connection.close();
-            throw new Exception("No record Found 2");
+            //throw new Exception("No record Found 2");
 
         } else {
             resultSet.beforeFirst();

@@ -33,5 +33,10 @@
          </children>
       </GridPane>
       <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0" />
+      <Pane layoutX="908.0" layoutY="176.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

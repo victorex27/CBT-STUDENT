@@ -74,10 +74,13 @@ public class THomeFXMLDocumentController implements Initializable {
         AtomicInteger x = new AtomicInteger(0);
         AtomicInteger y = new AtomicInteger(0);
 
+        //gridPane.getChildren().clear();
         student.getCourses().forEach(a -> {
 
             try {
 
+                //System.out.println("Student course"+a.getCourseCode());
+                
                 AnchorPane anchor;
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseCardViewFXML.fxml"));
                 anchor = (AnchorPane) loader.load();

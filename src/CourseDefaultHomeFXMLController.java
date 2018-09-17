@@ -30,7 +30,7 @@ public class CourseDefaultHomeFXMLController implements Initializable {
     @FXML private Label courseTitle;
     @FXML private Label courseCode;
 
-    private Course course;
+    private static Course course;
     static String courseCodeString;
     static String courseTitleString;
     /**
@@ -40,9 +40,15 @@ public class CourseDefaultHomeFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         // TODO
+        BackButtonController.setPrevious("THomeFXMLDocument.fxml");
+        courseCode.setText( course.getCourseCode());
+        courseTitle.setText( course.getCourseTitle());
     }    
 
+    public static void setCourse(Course c){
     
+        course = c;
+    }
     @FXML
     public void onAssessmentClick(ActionEvent evt){
     
@@ -86,10 +92,9 @@ public class CourseDefaultHomeFXMLController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentUploadFXML.fxml"));
             AnchorPane anchor = (AnchorPane) loader.load();
             AssignmentUploadFXMLController con = loader.getController();
-            con.setCourse(course);
-            //con.setCourse(course);
-           
+            con.setCourse(course.getRegId());
             
+           
             ScreenController.changeScreen(anchor);
         } catch (IOException ex) {
             Logger.getLogger(CourseDefaultHomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,11 +105,6 @@ public class CourseDefaultHomeFXMLController implements Initializable {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
-        courseCode.setText( course.getCourseCode());
-        courseTitle.setText( course.getCourseTitle());
-              
-    }
+   
     
 }

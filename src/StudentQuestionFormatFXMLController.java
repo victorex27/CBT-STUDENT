@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,6 +139,7 @@ public class StudentQuestionFormatFXMLController implements Initializable {
             Logger.getLogger(StudentQuestionFormatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+       
         currentSN = 0;
 
     }
@@ -166,6 +168,7 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
         pStatement.executeUpdate();
 
+        connection.close();
         toggleGroup.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle oldToggle, Toggle newToggle) -> {
 
             if (newToggle != null) {
@@ -178,11 +181,39 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
         // this will not work
         showQuestion(currentSN);
+        
+        System.out.println(""+getDuration(regId));
+       String[] array = getDuration(regId).split(":");
+        int hour = Integer.parseInt(array[0]);
+        int min = Integer.parseInt(array[1]);
+        int sec = Integer.parseInt(array[2]);
+        
 
-        CountDownTimer timer = new CountDownTimer(0, 1, 10);
+        new CountDownTimer(hour, min, sec);
 
     }
 
+    private String getDuration(int id) throws SQLException, ClassNotFoundException{
+    
+        String time= null;
+        Connection conn = SimpleConnection.getConnection();
+        
+        PreparedStatement pStmt = conn.prepareStatement("SELECT duration from teacher where id = (SELECT teacher_id FROM course_registration WHERE id = ?) LIMIT 1");
+        pStmt.setInt(1, id);
+        ResultSet res = pStmt.executeQuery();
+        
+        
+        while(res.next()){
+        
+            time = res.getString(1);
+        }
+          
+        conn.close();
+        return time;
+    
+    }
+    
+    
     @FXML
     private void showNext() {
 

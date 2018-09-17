@@ -32,6 +32,8 @@ public class AssignmentUploadFXMLController implements Initializable {
     private ObservableList<Pane> data;
     @FXML
     private ListView listView;
+    
+    private static int regId;
 
     /**
      * Initializes the controller class.
@@ -39,14 +41,16 @@ public class AssignmentUploadFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackButtonController.setPrevious("CourseDefaultHomeFXML.fxml");
         questions = new ArrayList<>();
         data = FXCollections.observableArrayList();
+        
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(int regId ) {
         try {
-            this.course = course;
-            questions = student.getAllAssignmentQuestions(course.getRegId());
+            
+            questions = student.getAllAssignmentQuestions(regId);
             showQuestionPane();
             //System.out.println("the amount of assignments for this course is "+questions.size());
         } catch (ClassNotFoundException ex) {
@@ -69,7 +73,7 @@ public class AssignmentUploadFXMLController implements Initializable {
                     Pane pane = (Pane) loader.load();
                     AssignmentPaneFXMLController con = loader.getController();
                     con.setLabel(e.getQuestion());
-                    con.setCourseRegId(course.getRegId());
+                    con.setCourseRegId(regId);
                     
                     con.setQuestionId(e.getId());
                     con.setData(data);

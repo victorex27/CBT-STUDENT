@@ -71,5 +71,10 @@
             <Font name="System Italic" size="16.0" />
          </font>
       </Label>
+      <Pane layoutX="891.0" layoutY="208.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

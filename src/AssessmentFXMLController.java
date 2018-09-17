@@ -30,7 +30,7 @@ public class AssessmentFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        BackButtonController.setPrevious("CourseDefaultHomeFXML.fxml");
     }
 
     public void setCourse(Course course) {
