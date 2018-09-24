@@ -5,17 +5,15 @@
  */
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -25,21 +23,27 @@ import javafx.stage.Stage;
  */
 public class FrameFXMLController implements Initializable {
 
+    
     /**
      * Initializes the controller class.
      */
     @FXML
-    Button closeButton;
+    private Button closeButton;
+    
+    @FXML private Label fullName;
 
+    private static String studentName;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
-            
-        
-           
-        
-        
+        fullName.setText(studentName);
+                 
+    }
+    
+    public static void setVariables(String _studentName){
+    
+        studentName = _studentName;
+    
     }
 
     @FXML

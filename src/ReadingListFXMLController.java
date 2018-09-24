@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+/**
+ * Make a modification to check if file exists
+ * then ask the user if he wants to replace or rename the file.
+ * (Modification not yet made) initialize method
+ */
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +32,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 /**
@@ -37,9 +42,13 @@ import javafx.scene.control.ListView;
  */
 public class ReadingListFXMLController implements Initializable {
 
-    @FXML ListView listView;
+    @FXML
+    private ListView listView;
+    @FXML
+    private Label noResultLabel;
     private ObservableList<String> list;
     Map<String, File> fileMap;
+
     /**
      * Initializes the controller class.
      */
@@ -48,22 +57,25 @@ public class ReadingListFXMLController implements Initializable {
         // TODO
         BackButtonController.setPrevious("CourseDefaultHomeFXML.fxml");
         fileMap = new HashMap<>();
-        
+
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-   
+
                 if (Desktop.isDesktopSupported()) {
                     File file = fileMap.get(newValue);
                     //Desktop.getDesktop().open(file);
-                    
-                    
-                    fileMap.get(newValue).renameTo( new File(System.getProperty("user.home")+"//Documents//"+file.getName()));
+
+                    /**
+                     * Make a modification to check if file exists then ask the
+                     * user if he wants to replace or rename the file.
+                     * (Modification not yet made)
+                     */
+                    fileMap.get(newValue).renameTo(new File(System.getProperty("user.home") + "//Documents//" + file.getName()));
                     //System.out.println(new File(System.getProperty("user.home")+"//Documents//"+file.getName()).getAbsolutePath());
-                    
-                    
+
                 }
-                
+
             }
         });
     }
@@ -81,39 +93,45 @@ public class ReadingListFXMLController implements Initializable {
 
             ResultSet result = pStatement.executeQuery();
 
-            while (result.next()) {
+            if (result.next()) {
 
-                String name = result.getString("name");
-                
+                noResultLabel.setVisible(false);
+                listView.setVisible(true);
+                result.beforeFirst();
+                while (result.next()) {
 
-                
-                File file = new File(name);
+                    String name = result.getString("name");
 
-                InputStream is = result.getBinaryStream("file");
-                OutputStream os = new FileOutputStream(file);
+                    File file = new File(name);
 
-                byte[] content = new byte[1024];
-                int size = 0;
-                while ((size = is.read(content)) != -1) {
-                    os.write(content, 0, size);
+                    InputStream is = result.getBinaryStream("file");
+                    OutputStream os = new FileOutputStream(file);
+
+                    byte[] content = new byte[1024];
+                    int size = 0;
+                    while ((size = is.read(content)) != -1) {
+                        os.write(content, 0, size);
+                    }
+
+                    os.close();
+                    is.close();
+
+                    fileMap.put(name, file);
+
+                    list.add(name);
                 }
-
-                os.close();
-                is.close();
-                
-                fileMap.put(name, file);
-
-               
-                list.add(name);
-            }
+            }else{
             
+                noResultLabel.setVisible(true);
+            }
+
             result.close();
             pStatement.close();
             connection.close();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ReadingListFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         listView.setItems(list);
 
     }

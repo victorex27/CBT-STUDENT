@@ -33,8 +33,8 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
@@ -61,7 +61,7 @@ public class StudentQuestionFormatFXMLController implements Initializable {
     @FXML
     private Label answerDLabel;
     @FXML
-    Label answerELabel;
+    private Label answerELabel;
     @FXML
     private RadioButton radioButtonA;
     @FXML
@@ -89,7 +89,7 @@ public class StudentQuestionFormatFXMLController implements Initializable {
     private Label timerSecond;
 
     @FXML
-    private GridPane gridPane;
+    private VBox vBox;
 
     @FXML
     private AnchorPane anchorPane;
@@ -168,7 +168,7 @@ public class StudentQuestionFormatFXMLController implements Initializable {
 
         pStatement.executeUpdate();
 
-        connection.close();
+        //connection.close();
         toggleGroup.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle oldToggle, Toggle newToggle) -> {
 
             if (newToggle != null) {
@@ -383,8 +383,8 @@ public class StudentQuestionFormatFXMLController implements Initializable {
         if (q.isTheory()) {
 
             
-            //remove gridPane
-            gridPane.setVisible(false);
+            //remove vBox
+            vBox.setVisible(false);
 
             //show textAreaPane
             //textAreaPane.setLayoutY(112);
@@ -403,8 +403,8 @@ public class StudentQuestionFormatFXMLController implements Initializable {
             //remove textAreaPane
             textAreaPane.setVisible(false);
 
-            //show gridPane
-            gridPane.setVisible(true);
+            //show vBox
+            vBox.setVisible(true);
 
             //You can scramble the options here.
             String a = q.getA();

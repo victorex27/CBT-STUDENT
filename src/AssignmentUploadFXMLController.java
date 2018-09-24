@@ -15,8 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -32,6 +32,7 @@ public class AssignmentUploadFXMLController implements Initializable {
     private ObservableList<Pane> data;
     @FXML
     private ListView listView;
+    @FXML private Label noResultLabel;
     
     private static int regId;
 
@@ -64,7 +65,8 @@ public class AssignmentUploadFXMLController implements Initializable {
     public void showQuestionPane() throws IOException{
         
         if(questions.size() > 0){
-            
+            noResultLabel.setVisible(false);
+            listView.setVisible(true);
             questions.forEach(e->{
                 
                 try {
@@ -87,6 +89,11 @@ public class AssignmentUploadFXMLController implements Initializable {
             });
             
             
+            
+        
+        }else {
+        
+           noResultLabel.setVisible(true);
             
         
         }

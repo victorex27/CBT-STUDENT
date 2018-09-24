@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -9,29 +11,81 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrameFXMLController">
-    <stylesheets>
-        <URL value="@framefxml.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="161.0" prefWidth="1024.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrameFXMLController">
    <children>
-      <Pane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;">
+      <Button fx:id="closeButton" layoutX="969.0" layoutY="14.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/close.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <StackPane prefHeight="160.0" prefWidth="969.0">
          <children>
-            <Pane prefHeight="127.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;">
+            <Pane fx:id="container" prefHeight="161.0" prefWidth="549.0" styleClass="top-segment">
                <children>
-                  <Button fx:id="closeButton" layoutX="978.0" layoutY="8.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/close.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <ImageView id="userImage" fx:id="userImage" fitHeight="137.0" fitWidth="111.0" layoutX="14.0" layoutY="13.0" pickOnBounds="true">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <effect>
+                        <DropShadow color="WHITE" height="15.0" radius="7.0" width="15.0" />
+                     </effect>
+                     <image>
+                        <Image url="@../../../../Pictures/2014-01-05/001.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="institutionImage" fx:id="institutionImage" fitHeight="70.0" fitWidth="66.0" layoutX="415.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" color="#aba7a7" height="15.0" radius="7.0" spread="1.0" width="15.0" />
+                     </effect>
+                     <image>
+                        <Image url="@../../../../Pictures/PICTURES/1307301496_Kennis-Music.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="institution" fx:id="institutionLbl" layoutX="134.0" layoutY="28.0" text="UNIVERSITY OF LAGOS, AKOKA" textFill="#cdc9c9" wrapText="true">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="Lato-Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="matric" fx:id="matricLbl" layoutX="134.0" layoutY="80.0" text="100805001" textFill="#cdc9c9">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="Lato-Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="department" fx:id="departmentLbl" layoutX="134.0" layoutY="55.0" text="COMPUTER SCIENCE" textFill="#cdc9c9">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="Lato-Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="fullName" fx:id="fullName" layoutX="134.0" layoutY="106.0" text="RUTH R. CHISOM" textFill="#cdc9c9">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="Lato-Light" size="18.0" />
+                     </font>
+                  </Label>
                </children>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </Pane>
-            <Pane layoutY="134.0" prefHeight="486.0" prefWidth="1024.0" style="-fx-background-color: #00344D;" styleClass="whiteTopPane" />
-            <Pane layoutY="618.0" prefHeight="150.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;" />
          </children>
-      </Pane>
+      </StackPane>
    </children>
 </AnchorPane>

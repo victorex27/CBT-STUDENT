@@ -13,7 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -27,17 +27,11 @@ public class CourseCardViewFXMLController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private Label courseCode;
-    @FXML
-    private Label courseTitle;
-
-    private String courseCodeString;
-    private String courseTitleString;
+    private Button button;
 
     private Student student;
+   
     private Course course;
-    //private Course course;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -72,8 +66,9 @@ public class CourseCardViewFXMLController implements Initializable {
 
     public  void setCourse(Course course) {
         this.course = course;
-        courseCode.setText(course.getCourseCode());
-        courseTitle.setText(course.getCourseTitle());
+        String text = course.getCourseCode()+"\n"+course.getCourseTitle();
+        button.setText(text);
+        
     }
 
    

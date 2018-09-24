@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,12 +29,10 @@ public class THomeFXMLDocumentController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML
-    private Label fullName;
+    
     @FXML
     private GridPane gridPane;
-    @FXML
-    private VBox vBox;
+   
 
     static Student student;
 
@@ -45,7 +44,8 @@ public class THomeFXMLDocumentController implements Initializable {
             // TODO
             // initialize fullName label
 
-            fullName.setText(student.getFullName());
+            
+            
 
             /**
              * Clean this up*
@@ -88,51 +88,21 @@ public class THomeFXMLDocumentController implements Initializable {
                 //CourseCardViewFXMLController.setCourse(a);
                 con.setCourse(a);
                 
-
-                gridPane.add(anchor, x.getAndIncrement() / count.get(), y.getAndIncrement() % count.get());
+                
+                
+                gridPane.add(anchor,x.get() % count.get(), y.get());
+       
+                //System.out.println(x.get()+" : "+y.get());
+                //gridPane.add(anchor, x.getAndIncrement() / count.get(), y.getAndIncrement() % count.get());
 
                 count.getAndIncrement();
-                //vBox.getChildren().add( anchor );
-                //rightPane.getChildren().add(anchor);
-
-                /*
-                link.setText(a.getCourseCode());
-                link.setOnAction(e -> {
                 
-                try {
-                
-                AnchorPane anchor;
-                
-                setCurrentCourse(a);
-                //dragPane.setVisible(false);
-                vBox.setVisible(false);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseCardViewFXML.fxml"));
-                try {
-                anchor = (AnchorPane) loader.load();
-                CourseCardViewFXMLController con = loader.getController();
-                
-                //con.setDocumentId(1);
-                //StudentQuestionFormatFXMLController controller = loader.getController();
-                //controller.setQuestions(student.getId(), student.getAllQuestions(a.getCourseCode()));
-                
-                //controller.setRegId(a.getRegId());
-                //controller.play(student, a.getCourseCode());
-                
-                //rightPane.getChildren().clear();
-                rightPane.getChildren().add(anchor);
-                
-                } catch (IOException ex) {
-                Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                if(x.get() == 1){
+                    
+                    y.getAndIncrement();
                 }
+                x.incrementAndGet();
                 
-                } catch (Exception ex) {
-                Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                });
-                
-                 */
-                //vBox.getChildren().add();
             } catch (IOException ex) {
                 Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -150,5 +120,12 @@ public class THomeFXMLDocumentController implements Initializable {
 
         currentCourse = _course;
     }
+    
+    @FXML private void logout(ActionEvent evt) throws IOException{
+        
+        ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("LoginFXMLDocument.fxml")));
+    }
+    
+    
 
 }

@@ -52,16 +52,17 @@ public class LoginFXMLDocumentController implements Initializable {
 
             Student student = new Student();
             /* Remember to change*/
-            if (!student.login("2008196767", "password")) {
+            if (!student.login(uName, pWord)) {
                 throw new Exception("Incorrect Username and Password Combination");
             }
 
+            FrameFXMLController.setVariables(student.getFullName());
             THomeFXMLDocumentController.setPerson(student);
             ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
 
         } catch (Exception ex) {
 
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
             warningText.setText(ex.getMessage());
             warningImage.setVisible(true);
             warningText.setVisible(true);
@@ -73,5 +74,7 @@ public class LoginFXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+    
+    
 
 }
